@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slow-logger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slow-logger
+  template:
+    metadata:
+      labels:
+        app: slow-logger
+    spec:
+      containers:
+      - name: logger
+        image: busybox
+        command: ["/bin/sh", "-c", "echo 'started'; while true; do sleep 600; echo \"heartbeat $(date)\"; done"]
